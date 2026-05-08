@@ -1,4 +1,3 @@
-
 ;;; company-c-headers.el --- Company mode backend for C/C++ header files  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2014 Alastair Rankine
@@ -184,11 +183,9 @@ Filters on the appropriate regex for the current major mode."
            ;; If pre-existing terminating delimiter already exists,
            ;; move cursor to end of line, ignoring white-space.
 	   (pcase (aref matched 0)
-             (?\" (if (looking-at "[ \t]*\"")
-                      (goto-char (match-end 0))
+             (?\" (if (looking-at "[ \t]*\"") (goto-char (match-end 0))
                     (insert "\"")))
-             (?<  (if (looking-at "[ \t]*>")
-                      (goto-char (match-end 0))
+             (?<  (if (looking-at "[ \t]*>")  (goto-char (match-end 0))
                     (insert ">"))))))))
     ))
 
