@@ -230,4 +230,23 @@ If terminating > already exist, don't add the >."
      (should (looking-back expected))
      )))
 
+(ert-deftest post-completion-skips-existing-quote-with-spaces ()
+  "Skip an existing quote even if there is whitespace."
+  (with-test-c-buffer
+    (insert "#include \"stdio.h")
+    (save-excursion (insert "  \""))
+    (company-c-headers 'post-completion "\"stdio.h")
+    (should (equal (buffer-string) "#include \"stdio.h  \""))
+    (should (equal (char-before) ?\"))))
+
+
+(ert-deftest post-completion-skips-existing-bracket-with-spaces ()
+  "Skip an existing bracket even if there is whitespace."
+  (with-test-c-buffer
+    (insert "#include <stdio.h")
+    (save-excursion (insert "  >"))
+    (company-c-headers 'post-completion "<stdio.h")
+    (should (equal (buffer-string) "#include <stdio.h  >"))
+    (should (equal (char-before) ?>))))
+
 ;;; company-c-headers-test.el ends here
